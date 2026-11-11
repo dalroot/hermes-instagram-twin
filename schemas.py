@@ -172,3 +172,33 @@ POST_COMMENT_SCHEMA = {
     "required": ["media_id", "text"]
 }
 
+PUBLISH_POST_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "caption": {
+            "type": "string",
+            "description": "Caption text with hashtags and mentions for the post."
+        },
+        "image_url": {
+            "type": "string",
+            "description": "Optional image URL or local file path to publish."
+        }
+    },
+    "required": ["caption"]
+}
+
+PUBLISH_STORY_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "image_url": {
+            "type": "string",
+            "description": "Optional image URL or local file path for the story."
+        },
+        "video_url": {
+            "type": "string",
+            "description": "Optional video URL or local file path for the story."
+        }
+    }
+}
+
+

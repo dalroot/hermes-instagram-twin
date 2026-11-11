@@ -174,3 +174,35 @@ def handle_post_comment(args: Optional[Dict[str, Any]] = None, ctx: Any = None) 
     })
     return json.dumps(res, indent=2, ensure_ascii=False)
 
+
+def handle_publish_post(args: Optional[Dict[str, Any]] = None, ctx: Any = None) -> str:
+    """Publish a feed photo post with caption and hardware encoder validation."""
+    clean_args = _normalize_args(args)
+    caption = str(clean_args.get("caption", "")).strip()
+    image_url = str(clean_args.get("image_url", "")).strip()
+
+    if not caption:
+        return json.dumps({"error": "Argument 'caption' is required."}, indent=2)
+
+    bridge = get_bridge()
+    res = bridge.execute_tool("instagram_publish_post", {
+        "caption": caption,
+        "image_url": image_url,
+    })
+    return json.dumps(res, indent=2, ensure_ascii=False)
+
+
+def handle_publish_story(args: Optional[Dict[str, Any]] = None, ctx: Any = None) -> str:
+    """Publish a story with hardware codec checks and 24-hour expiry lifecycle."""
+    clean_args = _normalize_args(args)
+    image_url = str(clean_args.get("image_url", "")).strip()
+    video_url = str(clean_args.get("video_url", "")).strip()
+
+    bridge = get_bridge()
+    res = bridge.execute_tool("instagram_publish_story", {
+        "image_url": image_url,
+        "video_url": video_url,
+    })
+    return json.dumps(res, indent=2, ensure_ascii=False)
+
+

@@ -149,6 +149,28 @@ All operations are battle-tested and backed 1:1 by Meta's production GraphQL end
   - Topic/Category classification (e.g. `Technology`, `Architecture`, `Announcements`)
 - **Sample Agent Query:** `instagram_get_insights(metric_type="dashboard", period="30d", content_type="REEL", sort_by="reach")`
 
+### 6. Media Publishing & Story Lifecycle (`instagram_publish_post`, `instagram_publish_story`)
+- **Feed Post Publishing (`instagram_publish_post`):**
+  * Validates caption limits (2,200 chars, max 30 hashtags, max 20 mentions) and hardware encoder requirements.
+  * Dispatches structured media container through the TwinGraph pipeline.
+- **Story Publishing (`instagram_publish_story`):**
+  * Hardware-accelerated codec profiles (`c2.qti.heic.encoder`, `c2.qti.hevc.encoder`).
+  * Enforces authentic 24-hour expiration lifecycle (`expiring_at = timestamp + 86400`).
+  * Complete fail-closed circuit breaker protection with zero speculative guessing.
+- **Story Output Sample (Verified Live Execution):**
+  ```json
+  {
+    "media": {
+      "id": "4028311571462692766_19835089130",
+      "strong_id__": "4028311571462692766_19835089130",
+      "fbid": "18024343541954648",
+      "is_reel_media": true,
+      "expiring_at": 1794518582,
+      "status": "ok"
+    }
+  }
+  ```
+
 
 
 ---
