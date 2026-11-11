@@ -34,3 +34,4 @@ provides_tools:
   - instagram_get_insights
   - instagram_get_inbox
   - instagram_send_message
+  - instagram_post_comment

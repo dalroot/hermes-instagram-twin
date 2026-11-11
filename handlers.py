@@ -150,3 +150,21 @@ def handle_send_message(args: Optional[Dict[str, Any]] = None, ctx: Any = None) 
         "text": text,
     })
     return json.dumps(res, indent=2, ensure_ascii=False)
+
+
+def handle_post_comment(args: Optional[Dict[str, Any]] = None, ctx: Any = None) -> str:
+    """Post authentic comment on an Instagram post, reel, or photo."""
+    clean_args = _normalize_args(args)
+    media_id = str(clean_args.get("media_id", "")).strip()
+    text = str(clean_args.get("text", "")).strip()
+
+    if not media_id or not text:
+        return json.dumps({"error": "Both 'media_id' and 'text' are required."}, indent=2)
+
+    bridge = get_bridge()
+    res = bridge.execute_tool("instagram_post_comment", {
+        "media_id": media_id,
+        "text": text,
+    })
+    return json.dumps(res, indent=2, ensure_ascii=False)
+

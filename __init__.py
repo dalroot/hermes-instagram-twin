@@ -21,6 +21,7 @@ try:
         handle_get_profile,
         handle_search,
         handle_send_message,
+        handle_post_comment,
     )
     from .schemas import (
         AUDIT_ACCOUNT_SCHEMA,
@@ -32,6 +33,7 @@ try:
         GET_PROFILE_SCHEMA,
         SEARCH_SCHEMA,
         SEND_MESSAGE_SCHEMA,
+        POST_COMMENT_SCHEMA,
     )
 except ImportError:
     from bridge import configure_bridge
@@ -45,6 +47,7 @@ except ImportError:
         handle_get_profile,
         handle_search,
         handle_send_message,
+        handle_post_comment,
     )
     from schemas import (
         AUDIT_ACCOUNT_SCHEMA,
@@ -56,6 +59,7 @@ except ImportError:
         GET_PROFILE_SCHEMA,
         SEARCH_SCHEMA,
         SEND_MESSAGE_SCHEMA,
+        POST_COMMENT_SCHEMA,
     )
 
 logger = logging.getLogger(__name__)
@@ -70,6 +74,7 @@ _TOOLS: List[Tuple[str, dict, Any, str]] = [
     ("instagram_get_insights", GET_INSIGHTS_SCHEMA, handle_get_insights, "📉"),
     ("instagram_get_inbox", GET_INBOX_SCHEMA, handle_get_inbox, "📥"),
     ("instagram_send_message", SEND_MESSAGE_SCHEMA, handle_send_message, "✉️"),
+    ("instagram_post_comment", POST_COMMENT_SCHEMA, handle_post_comment, "✍️"),
 ]
 
 

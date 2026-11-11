@@ -140,3 +140,19 @@ SEND_MESSAGE_SCHEMA = {
     },
     "required": ["recipient_id", "text"]
 }
+
+POST_COMMENT_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "media_id": {
+            "type": "string",
+            "description": "Instagram post URL (e.g. 'https://www.instagram.com/p/DfnMpBfADzF/'), shortcode (e.g. 'DfnMpBfADzF'), or numerical media ID."
+        },
+        "text": {
+            "type": "string",
+            "description": "Text content of the comment to post."
+        }
+    },
+    "required": ["media_id", "text"]
+}
+

@@ -11,11 +11,11 @@
 
 Unlike brittle web scrapers or impossible Meta App Review business verification walls, **Hermes Instagram Twin** uses a dual-engine architecture:
 1. **Ghost Mode (Zero Footprint / Zero Login):** Inspect public profiles, harvest comments, scan viral reels, and search hashtags without leaving any footprint.
-2. **Authenticated Digital Twin (Full Meta Graph v21.0):** Deep 30-day professional analytics, reel retention curves, and direct messaging with automated username-to-PK resolution.
+2. **Authenticated Digital Twin (Full Meta Graph v21.0):** Deep 30-day professional analytics, reel retention curves, direct messaging with automated username-to-PK resolution, and authentic comment publication with dynamic security token handling.
 
 ---
 
-## 🛠️ Provided Tools
+## 🛠️ Provided Tools (10 Tools)
 
 | Tool | Mode | Description |
 | :--- | :---: | :--- |
@@ -28,6 +28,46 @@ Unlike brittle web scrapers or impossible Meta App Review business verification 
 | `instagram_get_insights` | Authenticated | 30-day account overview, follower growth, and video retention curves. |
 | `instagram_get_inbox` | Authenticated | Fetch active conversations and unread direct message threads. |
 | `instagram_send_message` | Authenticated | Send direct messages to recipients (supports usernames or numeric PKs). |
+| `instagram_post_comment` | Authenticated | Post authentic comments on any post or reel (supports URLs, shortcodes, or numeric IDs). |
+
+---
+
+## 🔬 Live Verified Capabilities & Ground-Truth Evidence
+
+All operations are battle-tested and backed 1:1 by Meta's production GraphQL endpoints and physical REA telemetry:
+
+### 1. Direct Messaging (`instagram_send_message`)
+- **Meta Query:** `IGDirectTextSendMutation` (RelayModern)
+- **Automatic Resolution:** Resolves recipient username (e.g. `@elephant.035421`) to 64-bit numeric PK (`74538407011`) via anonymous lookup.
+- **Verified Live Telemetry Output:**
+  ```json
+  {
+    "message_id": "mid.$cAH_7f26Pqk-n_VOCmxjnE-Hr80sT",
+    "thread_id": "74538407011",
+    "timestamp": 1794424847003,
+    "status": "ok"
+  }
+  ```
+
+### 2. Authentic Comment Publishing (`instagram_post_comment`)
+- **Meta Query:** `PolarisPostCommentInputRevampedMutation` (`doc_id: 27261905640092552`)
+- **Automated Parameter Coercion:** Accepts full URLs (`https://www.instagram.com/p/DfnMpBfADzF/`), shortcodes (`DfnMpBfADzF`), or internal numeric PKs (`4028243987356728517`), and binds authentic post referer headers.
+- **Dynamic Security Tokens:** Automatically refreshes `fb_dtsg`, `jazoest`, and `lsd` tokens before dispatch.
+- **Verified Live Telemetry Output:**
+  ```json
+  {
+    "id": "18017609843974886",
+    "text": "بسیار زیبا، تست خودکار پلاگین هرمس ✨",
+    "timestamp": "2026-11-11T19:35:31.000Z",
+    "like_count": 0,
+    "from": {
+      "id": "19835089130",
+      "username": "hokar368",
+      "name": "hokarveria"
+    },
+    "status": "ok"
+  }
+  ```
 
 ---
 
@@ -36,31 +76,40 @@ Unlike brittle web scrapers or impossible Meta App Review business verification 
 ### 1. Requirements
 - Hermes Agent `>= 0.19.0`
 - Node.js `>= 18.0.0`
-- `twingraph` engine CLI
+- `twingraph` engine CLI (globally linked or installed in PATH)
 
 ### 2. Install Plugin via Hermes CLI
 ```bash
 hermes plugins install twingraph-instagram
 ```
 
+Or clone directly into your Hermes plugins directory:
+```bash
+git clone https://github.com/dalroot/hermes-instagram-twin.git ~/.hermes/plugins/twingraph-instagram
+```
+
 ### 3. One-Click Authentication (No API Keys Needed)
-If you wish to use authenticated direct messaging and account insights:
+If you wish to use authenticated direct messaging, commenting, and account insights:
 ```bash
 twingraph login
 ```
-This opens your local browser, lets you log in securely, and automatically saves your session to `~/instagram_session.json`.
+This opens your local browser, lets you log in securely, and automatically saves your authenticated session to `~/instagram_session.json`.
 
 ---
 
 ## 💬 Example Agent Interactions
 
-### Competitor Intelligence:
-> **User:** "Audit the Instagram account @cristiano and give me his content mix and average engagement."  
-> **Hermes:** Calls `instagram_audit_account` and returns a breakdown of reels vs. posts and engagement benchmarks.
-
 ### Direct Message Outreach:
 > **User:** "Send a direct message to @elephant.035421 saying 'Welcome to our partner program!'"  
 > **Hermes:** Resolves the username to its numeric PK via `instagram_send_message` and dispatches the message live.
+
+### Comment Engagement:
+> **User:** "Leave a friendly comment on https://www.instagram.com/p/DfnMpBfADzF/ saying 'Great job!'"  
+> **Hermes:** Automatically extracts the post shortcode, binds security tokens, and calls `instagram_post_comment`.
+
+### Competitor Intelligence:
+> **User:** "Audit the Instagram account @cristiano and give me his content mix and average engagement."  
+> **Hermes:** Calls `instagram_audit_account` and returns a breakdown of reels vs. posts and engagement benchmarks.
 
 ### Content Performance Deep-Dive:
 > **User:** "How did our account perform in the last 30 days?"  
@@ -68,11 +117,11 @@ This opens your local browser, lets you log in securely, and automatically saves
 
 ---
 
-## 🔒 Security & Privacy
+## 🔒 Security & Anti-Ban Protocols
 
-- **Zero Credential Leaks:** Credentials and cookies are never uploaded, logged, or sent to external servers.
-- **Fail-Closed Safety:** Single-attempt circuit breakers prevent automated loops or account checkpoints.
-- **Strict Anti-Ban Protocols:** Respects Meta API rate limits and comment velocity ceilings.
+- **Zero Credential Leaks:** Credentials and cookies are stored strictly on the local machine and never logged or exposed.
+- **Circuit Breaker Architecture:** Single-attempt fail-closed safety prevents runaway retry loops.
+- **Integrity Compliance:** Adheres to Meta's string deduplication ceilings and request jitter intervals.
 
 ---
 
