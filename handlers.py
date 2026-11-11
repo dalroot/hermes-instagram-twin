@@ -5,6 +5,7 @@ from __future__ import annotations
 import json
 import logging
 from typing import Any, Dict, Optional
+from pathlib import Path
 
 try:
     from .bridge import get_bridge
@@ -167,4 +168,36 @@ def handle_post_comment(args: Optional[Dict[str, Any]] = None, ctx: Any = None) 
         "text": text,
     })
     return json.dumps(res, indent=2, ensure_ascii=False)
+
+def handle_publish_post(args: Optional[Dict[str, Any]] = None, ctx: Any = None) -> str:
+    """Request publication of a local image using an authenticated TwinGraph session.
+
+    The engine must support `instagram_publish_post`. A failed call must never
+    be reported as a successful publication; this handler performs no retries.
+    """
+    clean_args = _normalize_args(args)
+    image_path = clean_args.get("image_path")
+    caption = clean_args.get("caption", "")
+
+    if not isinstance(image_path, str) or not image_path.strip():
+        return json.dumps({"status": "error", "error": "A non-empty 'image_path' is required."})
+    if not isinstance(caption, str):
+        return json.dumps({"status": "error", "error": "'caption' must be a string."})
+
+    image_file = Path(image_path).expanduser().resolve()
+    if not image_file.is_file():
+        return json.dumps({"status": "error", "error": "Image file not found."})
+
+    try:
+        result = get_bridge().execute_tool("instagram_publish_post", {
+            "image_path": str(image_file),
+            "caption": caption,
+        })
+    except Exception as exc:
+        logger.warning("Instagram publish request failed: %s", exc)
+        return json.dumps({"status": "error", "error": str(exc)}, ensure_ascii=False)
+
+    if not isinstance(result, dict):
+        return json.dumps({"status": "error", "error": "Unexpected response from publishing engine."})
+    return json.dumps(result, indent=2, ensure_ascii=False)
 

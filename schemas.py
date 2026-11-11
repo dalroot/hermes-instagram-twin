@@ -156,3 +156,20 @@ POST_COMMENT_SCHEMA = {
     "required": ["media_id", "text"]
 }
 
+PUBLISH_POST_SCHEMA = {
+    "type": "object",
+    "properties": {
+        "image_path": {
+            "type": "string",
+            "minLength": 1,
+            "description": "Path to an image file accessible to the local TwinGraph process."
+        },
+        "caption": {
+            "type": "string",
+            "description": "Optional caption, including newlines, emoji, and hashtags.",
+            "default": ""
+        }
+    },
+    "required": ["image_path"],
+    "additionalProperties": False
+}
