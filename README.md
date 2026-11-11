@@ -69,6 +69,33 @@ All operations are battle-tested and backed 1:1 by Meta's production GraphQL end
   }
   ```
 
+### 3. Direct Message Inbox & Thread Inspection (`instagram_get_inbox`)
+- **Meta Query:** `PolarisDirectInboxQuery` (`doc_id: 27909866362025854`)
+- **Telemetry Backing:** Authentic REA trace `scratch/rea_web_direct_trace.json` (Line 182).
+- **Verified Live Telemetry Output:**
+  ```json
+  {
+    "data": [
+      {
+        "id": "1444865887083144",
+        "updated_time": "2026-11-11T19:20:47.003Z",
+        "unread_count": 0,
+        "participants": {
+          "data": [
+            {
+              "id": "74538407011",
+              "username": "elephant.035421",
+              "name": "elephant.035421"
+            }
+          ]
+        },
+        "snippet": "این تست پلاگین هست"
+      }
+    ]
+  }
+  ```
+
+
 ---
 
 ## 🚀 Installation & Setup
