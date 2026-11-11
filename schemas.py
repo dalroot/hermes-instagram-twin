@@ -98,8 +98,8 @@ GET_INSIGHTS_SCHEMA = {
     "properties": {
         "metric_type": {
             "type": "string",
-            "enum": ["overview", "media"],
-            "description": "Type of insights: 'overview' for 30d account performance, 'media' for specific media retention.",
+            "enum": ["overview", "dashboard", "content", "media"],
+            "description": "Type of insights: 'overview' for account metrics, 'dashboard' or 'content' for multi-dimensional content analytics & categorization, 'media' for specific media retention.",
             "default": "overview"
         },
         "media_id": {
@@ -108,9 +108,25 @@ GET_INSIGHTS_SCHEMA = {
         },
         "period": {
             "type": "string",
-            "enum": ["7d", "14d", "30d", "90d"],
-            "description": "Reporting period for account overview (default: '30d').",
+            "enum": ["24h", "7d", "14d", "30d", "90d"],
+            "description": "Reporting period (default: '30d').",
             "default": "30d"
+        },
+        "content_type": {
+            "type": "string",
+            "enum": ["ALL", "REEL", "POST", "STORY"],
+            "description": "Filter by content type ('ALL', 'REEL', 'POST', 'STORY') when inspecting content dashboard.",
+            "default": "ALL"
+        },
+        "category": {
+            "type": "string",
+            "description": "Optional category filter (e.g. 'Technology', 'Architecture', 'Announcements')."
+        },
+        "sort_by": {
+            "type": "string",
+            "enum": ["reach", "plays", "impressions", "likes", "comments", "shares", "saves"],
+            "description": "Sorting metric for content dashboard (default: 'reach').",
+            "default": "reach"
         }
     }
 }

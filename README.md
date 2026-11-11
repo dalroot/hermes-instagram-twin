@@ -139,6 +139,17 @@ All operations are battle-tested and backed 1:1 by Meta's production GraphQL end
   }
   ```
 
+### 6. Multi-Dimensional Content & Performance Dashboard (`instagram_get_insights`)
+- **Engine:** Powered by `DashboardTwin.filterContentInsights`
+- **Multi-Dimensional Capabilities:**
+  - Aggregates performance across all media formats: **Reels**, **Feed Posts**, and **Stories**
+  - Granular metrics per asset: `reach`, `plays`, `impressions`, `likes`, `comments`, `shares`, `saves`, `follows`, `exits`
+  - Granular Audience Retention Curves (comparing drop-offs second-by-second for followers vs non-followers)
+  - Surface breakdown (distribution across `explore`, `reels_tab`, `home_feed`, `profile_grid`)
+  - Topic/Category classification (e.g. `Technology`, `Architecture`, `Announcements`)
+- **Sample Agent Query:** `instagram_get_insights(metric_type="dashboard", period="30d", content_type="REEL", sort_by="reach")`
+
+
 
 ---
 

@@ -110,17 +110,23 @@ def handle_audit_account(args: Optional[Dict[str, Any]] = None, ctx: Any = None)
 
 
 def handle_get_insights(args: Optional[Dict[str, Any]] = None, ctx: Any = None) -> str:
-    """Fetch authenticated account overview or media retention curve insights."""
+    """Fetch authenticated account overview, multi-dimensional content dashboard, or media retention curves."""
     clean_args = _normalize_args(args)
     metric_type = str(clean_args.get("metric_type", "overview")).strip().lower()
     period = str(clean_args.get("period", "30d")).strip()
     media_id = str(clean_args.get("media_id", "")).strip()
+    content_type = str(clean_args.get("content_type", "ALL")).strip()
+    category = str(clean_args.get("category", "")).strip()
+    sort_by = str(clean_args.get("sort_by", "reach")).strip()
 
     bridge = get_bridge()
     res = bridge.execute_tool("instagram_get_insights", {
         "metric_type": metric_type,
         "period": period,
         "media_id": media_id,
+        "content_type": content_type,
+        "category": category,
+        "sort_by": sort_by,
     })
     return json.dumps(res, indent=2, ensure_ascii=False)
 
