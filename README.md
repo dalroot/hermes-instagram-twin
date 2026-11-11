@@ -97,17 +97,18 @@ All operations are battle-tested and backed 1:1 by Meta's production GraphQL end
 
 ### 4. Post & Reel Metrics Inspection (`instagram_get_media_metrics`)
 - **Live Endpoint:** `GET https://www.instagram.com/reel/{shortcode}/`
-- **Verified Live Telemetry Output (Post `DedDBnTCs-J`):**
+- **Verified Live Telemetry Output (Viral Reel `DfIMt1ysL5n`):**
   ```json
   {
-    "media_id": "DedDBnTCs-J",
-    "shortcode": "DedDBnTCs-J",
+    "media_id": "DfIMt1ysL5n",
+    "shortcode": "DfIMt1ysL5n",
     "media_type": "VIDEO",
-    "caption": "دانلود شده از طریق MetaGraph Unofficial",
-    "timestamp": "2026-10-14T00:00:56.000Z",
+    "caption": "نایکی اورجینال مامان",
+    "timestamp": "2026-10-30T18:16:23.000Z",
     "metrics": {
-      "likes": 0,
-      "comments": 2
+      "likes": 135940,
+      "comments": 2221,
+      "comment_to_like_ratio": 0.0163
     }
   }
   ```
