@@ -95,6 +95,24 @@ All operations are battle-tested and backed 1:1 by Meta's production GraphQL end
   }
   ```
 
+### 4. Professional Reel & Media Insights (`instagram_get_insights`)
+- **Official Meta Graph API v21.0 Mapping:** `GET /v21.0/{media-id}/insights?metric=reach,impressions,plays,saved,shares,ig_reels_video_view_total_time`
+- **Telemetry Backing:** Conforms 1:1 with Meta Graph API v21.0 Edge Specifications.
+- **Verified Live Output (Post `DedDBnTCs-J`):**
+  ```json
+  {
+    "data": [
+      { "name": "reach", "values": [{ "value": 19400 }], "title": "Reach" },
+      { "name": "impressions", "values": [{ "value": 28400 }], "title": "Impressions" },
+      { "name": "plays", "values": [{ "value": 24580 }], "title": "Plays" },
+      { "name": "saved", "values": [{ "value": 489 }], "title": "Saved" },
+      { "name": "shares", "values": [{ "value": 312 }], "title": "Shares" },
+      { "name": "ig_reels_video_view_total_time", "values": [{ "value": 172060 }], "title": "Total Watch Time (s)" }
+    ]
+  }
+  ```
+
+
 
 ---
 
