@@ -1,0 +1,36 @@
+name: twingraph-instagram
+version: 0.1.0
+manifest_version: 2
+api_version: 1
+description: "Autonomous Instagram Agent powered by TwinGraph and Meta Graph API v21.0 Digital Twin architecture. Provides deep account analytics, reel retention curves, intelligent direct messaging, and anonymous ghost mode exploration."
+author: dalroot
+kind: standalone
+platforms:
+  - linux
+  - macos
+  - windows
+requires_hermes: ">=0.19.0"
+config_schema:
+  session_path:
+    type: str
+    default: ""
+    label: "Instagram Session Path"
+    description: "Path to instagram_session.json (defaults to ~/instagram_session.json or local directory)."
+    required: false
+  proxy_url:
+    type: str
+    default: ""
+    label: "Custom SOCKS5/HTTP Proxy URL"
+    description: "Optional proxy URL (e.g. socks5://127.0.0.1:10808). Auto-detects open local proxy ports if omitted."
+    required: false
+requires_env: []
+provides_tools:
+  - instagram_get_profile
+  - instagram_get_posts
+  - instagram_get_media_metrics
+  - instagram_get_comments
+  - instagram_search
+  - instagram_audit_account
+  - instagram_get_insights
+  - instagram_get_inbox
+  - instagram_send_message
