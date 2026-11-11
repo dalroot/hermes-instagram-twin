@@ -95,6 +95,49 @@ All operations are battle-tested and backed 1:1 by Meta's production GraphQL end
   }
   ```
 
+### 4. Post & Reel Metrics Inspection (`instagram_get_media_metrics`)
+- **Live Endpoint:** `GET https://www.instagram.com/reel/{shortcode}/`
+- **Verified Live Telemetry Output (Post `DedDBnTCs-J`):**
+  ```json
+  {
+    "media_id": "DedDBnTCs-J",
+    "shortcode": "DedDBnTCs-J",
+    "media_type": "VIDEO",
+    "caption": "دانلود شده از طریق MetaGraph Unofficial",
+    "timestamp": "2026-10-14T00:00:56.000Z",
+    "metrics": {
+      "likes": 0,
+      "comments": 2
+    }
+  }
+  ```
+
+### 5. Live Comment Harvesting (`instagram_get_comments`)
+- **Live Extraction:** Harvests public comment threads with zero login requirements.
+- **Verified Live Telemetry Output (Post `DedDBnTCs-J`):**
+  ```json
+  {
+    "media_id": "DedDBnTCs-J",
+    "total_retrieved": 2,
+    "comments": [
+      {
+        "id": "18141110767624387",
+        "username": "hokar368",
+        "text": "13232 hello",
+        "timestamp": "2026-10-18T23:58:22.000Z",
+        "like_count": 0
+      },
+      {
+        "id": "18119724575087469",
+        "username": "hokar368",
+        "text": "سلام گرایوتی اینو دیدی ؟",
+        "timestamp": "2026-10-18T23:58:04.000Z",
+        "like_count": 0
+      }
+    ]
+  }
+  ```
+
 
 ---
 
