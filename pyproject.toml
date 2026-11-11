@@ -3,9 +3,9 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "twingraph-instagram"
-version = "0.1.0"
-description = "Autonomous Instagram Agent Plugin for Hermes Agent"
+name = "instagram-use"
+version = "0.2.0"
+description = "Make Instagram usable for AI agents — MCP Server and Agent Plugin with Ghost Mode and Authenticated Meta Graph Twin"
 readme = "README.md"
 authors = [{ name = "dalroot" }]
 license = { text = "MIT" }

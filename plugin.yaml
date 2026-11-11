@@ -1,8 +1,8 @@
-name: twingraph-instagram
-version: 0.1.0
+name: instagram-use
+version: 0.2.0
 manifest_version: 2
 api_version: 1
-description: "Autonomous Instagram Agent powered by TwinGraph and Meta Graph API v21.0 Digital Twin architecture. Provides deep account analytics, reel retention curves, intelligent direct messaging, and anonymous ghost mode exploration."
+description: "Make Instagram usable for AI agents. Standardized Meta Graph API v21.0 Twin architecture with Ghost Mode (anonymous inspection) and Authenticated Mode (publishing stories, posts, direct messaging, and comments)."
 author: dalroot
 kind: standalone
 platforms:

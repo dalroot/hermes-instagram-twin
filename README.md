@@ -1,234 +1,191 @@
-# Hermes Instagram Twin 📸🤖
+# instagram-use
 
-> **Autonomous Instagram Intelligence & Direct Engagement Plugin for Hermes Agent**  
-> Powered by **TwinGraph**, conforming 1:1 with **Meta Graph API v21.0** specifications and authentic Xiaomi Redmi Note 13 4G physical telemetry.
+> Make Instagram usable for AI agents.  
+> Standardized Meta Graph API v21.0 Twin architecture, Model Context Protocol (MCP) server, and Agent plugin for autonomous Instagram workflows via session cookies or anonymous Ghost Mode.
 
----
-
-## 🌟 Overview
-
-**Hermes Instagram Twin** empowers Hermes Agent to act as an autonomous social media manager, customer engagement specialist, and competitor intelligence agent on Instagram.
-
-Unlike brittle web scrapers or impossible Meta App Review business verification walls, **Hermes Instagram Twin** uses a dual-engine architecture:
-1. **Ghost Mode (Zero Footprint / Zero Login):** Inspect public profiles, harvest comments, scan viral reels, and search hashtags without leaving any footprint.
-2. **Authenticated Digital Twin (Full Meta Graph v21.0):** Deep 30-day professional analytics, reel retention curves, direct messaging with automated username-to-PK resolution, and authentic comment publication with dynamic security token handling.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Python: >=3.10](https://img.shields.io/badge/Python->=3.10-3776AB.svg)](pyproject.toml)
+[![Node.js: >=18.0](https://img.shields.io/badge/Node.js->=18.0-339933.svg)](package.json)
+[![Meta Graph API: v21.0](https://img.shields.io/badge/Meta%20Graph%20API-v21.0%20Twin-0081FB.svg)](https://developers.facebook.com/docs/graph-api)
+[![Protocol: MCP & Hermes](https://img.shields.io/badge/Protocol-MCP%20%7C%20Hermes%20Plugin-orange.svg)](plugin.yaml)
 
 ---
 
-## 🛠️ Provided Tools (10 Tools)
+## Overview
 
-| Tool | Mode | Description |
-| :--- | :---: | :--- |
-| `instagram_get_profile` | Ghost | Inspect any Instagram profile (bio, followers, verified status, avatar). |
-| `instagram_get_posts` | Ghost | Fetch recent posts/reels with like counts, comments, and engagement rates. |
-| `instagram_get_media_metrics` | Ghost | Inspect views, plays, and discussion metrics for a specific reel or post. |
-| `instagram_get_comments` | Ghost | Harvest live public comments from any post or reel. |
-| `instagram_search` | Ghost | Search users and trending hashtags anonymously. |
-| `instagram_audit_account` | Ghost | End-to-end analytical audit of any competitor or influencer. |
-| `instagram_get_insights` | Authenticated | 30-day account overview, follower growth, and video retention curves. |
-| `instagram_get_inbox` | Authenticated | Fetch active conversations and unread direct message threads. |
-| `instagram_send_message` | Authenticated | Send direct messages to recipients (supports usernames or numeric PKs). |
-| `instagram_post_comment` | Authenticated | Post authentic comments on any post or reel (supports URLs, shortcodes, or numeric IDs). |
+Modern AI agents need hands and eyes on social platforms, but integrating with Instagram has traditionally forced teams into one of two dead ends:
+1. **The Official Meta App Wall:** Requires burdensome corporate business verification, multi-week app reviews, and severely restricted permission scopes.
+2. **Fragile Web Scrapers:** Unstructured HTML parsing that breaks with every frontend release and triggers instant security checkpoints or account bans.
+
+`instagram-use` bridges this gap. It models public actions and authenticated workflows **1:1 after the official Meta Graph API v21.0 specifications**, executing them directly through clean GraphQL and private session transports. 
+
+Designed specifically for LLM tool-calling (Hermes, Claude Desktop/MCP, Antigravity, LangChain, CrewAI, AutoGen), `instagram-use` outputs strictly typed, structured JSON payloads with built-in safety circuit breakers.
 
 ---
 
-## 🔬 Live Verified Capabilities & Ground-Truth Evidence
+## Dual Operational Modes
 
-All operations are battle-tested and backed 1:1 by Meta's production GraphQL endpoints and physical REA telemetry:
+`instagram-use` operates in two distinct modes depending on task requirements:
 
-### 1. Direct Messaging (`instagram_send_message`)
-- **Meta Query:** `IGDirectTextSendMutation` (RelayModern)
-- **Automatic Resolution:** Resolves recipient username (e.g. `@elephant.035421`) to 64-bit numeric PK (`74538407011`) via anonymous lookup.
-- **Verified Live Telemetry Output:**
-  ```json
-  {
-    "message_id": "mid.$cAH_7f26Pqk-n_VOCmxjnE-Hr80sT",
-    "thread_id": "74538407011",
-    "timestamp": 1794424847003,
-    "status": "ok"
-  }
-  ```
-
-### 2. Authentic Comment Publishing (`instagram_post_comment`)
-- **Meta Query:** `PolarisPostCommentInputRevampedMutation` (`doc_id: 27261905640092552`)
-- **Automated Parameter Coercion:** Accepts full URLs (`https://www.instagram.com/p/DfnMpBfADzF/`), shortcodes (`DfnMpBfADzF`), or internal numeric PKs (`4028243987356728517`), and binds authentic post referer headers.
-- **Dynamic Security Tokens:** Automatically refreshes `fb_dtsg`, `jazoest`, and `lsd` tokens before dispatch.
-- **Verified Live Telemetry Output:**
-  ```json
-  {
-    "id": "18017609843974886",
-    "text": "بسیار زیبا، تست خودکار پلاگین هرمس ✨",
-    "timestamp": "2026-11-11T19:35:31.000Z",
-    "like_count": 0,
-    "from": {
-      "id": "19835089130",
-      "username": "hokar368",
-      "name": "hokarveria"
-    },
-    "status": "ok"
-  }
-  ```
-
-### 3. Direct Message Inbox & Thread Inspection (`instagram_get_inbox`)
-- **Meta Query:** `PolarisDirectInboxQuery` (`doc_id: 27909866362025854`)
-- **Telemetry Backing:** Authentic REA trace `scratch/rea_web_direct_trace.json` (Line 182).
-- **Verified Live Telemetry Output:**
-  ```json
-  {
-    "data": [
-      {
-        "id": "1444865887083144",
-        "updated_time": "2026-11-11T19:20:47.003Z",
-        "unread_count": 0,
-        "participants": {
-          "data": [
-            {
-              "id": "74538407011",
-              "username": "elephant.035421",
-              "name": "elephant.035421"
-            }
-          ]
-        },
-        "snippet": "این تست پلاگین هست"
-      }
-    ]
-  }
-  ```
-
-### 4. Post & Reel Metrics Inspection (`instagram_get_media_metrics`)
-- **Live Endpoint:** `GET https://www.instagram.com/reel/{shortcode}/`
-- **Verified Live Telemetry Output (Viral Reel `DfIMt1ysL5n`):**
-  ```json
-  {
-    "media_id": "DfIMt1ysL5n",
-    "shortcode": "DfIMt1ysL5n",
-    "media_type": "VIDEO",
-    "caption": "نایکی اورجینال مامان",
-    "timestamp": "2026-10-30T18:16:23.000Z",
-    "metrics": {
-      "likes": 135940,
-      "comments": 2221,
-      "comment_to_like_ratio": 0.0163
-    }
-  }
-  ```
-
-### 5. Live Comment Harvesting (`instagram_get_comments`)
-- **Live Extraction:** Harvests public comment threads with zero login requirements.
-- **Verified Live Telemetry Output (Post `DedDBnTCs-J`):**
-  ```json
-  {
-    "media_id": "DedDBnTCs-J",
-    "total_retrieved": 2,
-    "comments": [
-      {
-        "id": "18141110767624387",
-        "username": "hokar368",
-        "text": "13232 hello",
-        "timestamp": "2026-10-18T23:58:22.000Z",
-        "like_count": 0
-      },
-      {
-        "id": "18119724575087469",
-        "username": "hokar368",
-        "text": "سلام گرایوتی اینو دیدی ؟",
-        "timestamp": "2026-10-18T23:58:04.000Z",
-        "like_count": 0
-      }
-    ]
-  }
-  ```
-
-### 6. Multi-Dimensional Content & Performance Dashboard (`instagram_get_insights`)
-- **Engine:** Powered by `DashboardTwin.filterContentInsights`
-- **Multi-Dimensional Capabilities:**
-  - Aggregates performance across all media formats: **Reels**, **Feed Posts**, and **Stories**
-  - Granular metrics per asset: `reach`, `plays`, `impressions`, `likes`, `comments`, `shares`, `saves`, `follows`, `exits`
-  - Granular Audience Retention Curves (comparing drop-offs second-by-second for followers vs non-followers)
-  - Surface breakdown (distribution across `explore`, `reels_tab`, `home_feed`, `profile_grid`)
-  - Topic/Category classification (e.g. `Technology`, `Architecture`, `Announcements`)
-- **Sample Agent Query:** `instagram_get_insights(metric_type="dashboard", period="30d", content_type="REEL", sort_by="reach")`
-
-### 6. Media Publishing & Story Lifecycle (`instagram_publish_post`, `instagram_publish_story`)
-- **Feed Post Publishing (`instagram_publish_post`):**
-  * Validates caption limits (2,200 chars, max 30 hashtags, max 20 mentions) and hardware encoder requirements.
-  * Dispatches structured media container through the TwinGraph pipeline.
-- **Story Publishing (`instagram_publish_story`):**
-  * Hardware-accelerated codec profiles (`c2.qti.heic.encoder`, `c2.qti.hevc.encoder`).
-  * Enforces authentic 24-hour expiration lifecycle (`expiring_at = timestamp + 86400`).
-  * Complete fail-closed circuit breaker protection with zero speculative guessing.
-- **Story Output Sample (Verified Live Execution):**
-  ```json
-  {
-    "media": {
-      "id": "4028311571462692766_19835089130",
-      "strong_id__": "4028311571462692766_19835089130",
-      "fbid": "18024343541954648",
-      "is_reel_media": true,
-      "expiring_at": 1794518582,
-      "status": "ok"
-    }
-  }
-  ```
-
-
-
----
-
-## 🚀 Installation & Setup
-
-### 1. Requirements
-- Hermes Agent `>= 0.19.0`
-- Node.js `>= 18.0.0`
-- `twingraph` engine CLI (globally linked or installed in PATH)
-
-### 2. Install Plugin via Hermes CLI
-```bash
-hermes plugins install twingraph-instagram
+```
+┌────────────────────────────────────────────────────────┐
+│                     instagram-use                      │
+├───────────────────────────┬────────────────────────────┤
+│        Ghost Mode         │     Authenticated Mode     │
+│   (Zero Login / Public)   │   (Cookie Session / Auth)  │
+├───────────────────────────┼────────────────────────────┤
+│ • Profile Inspection      │ • Story Publishing         │
+│ • Public Post / Reel Data │ • Feed Post Publishing     │
+│ • Public Comment Harvest  │ • Direct Message (Send/DM) │
+│ • Hashtag / User Search   │ • Direct Inbox Inspection  │
+│ • Competitor Account Audit│ • Post / Reel Commenting   │
+│                           │ • 30-Day Account Insights  │
+└───────────────────────────┴────────────────────────────┘
 ```
 
+### 1. Ghost Mode (Zero Footprint / No Login)
+* **Zero Credentials Required:** No account, password, or cookies necessary.
+* **Risk-Free Exploration:** Inspect competitor profiles, harvest public comment threads, scan viral reels, and search hashtags without leaving an audit trail or risking primary accounts.
+* **Ideal For:** Market intelligence agents, competitor monitoring, sentiment scrapers, and trend discovery bots.
+
+### 2. Authenticated Mode (Session-Based Digital Twin)
+* **Cookie-Based Authentication:** Operates through a standard desktop session file (`instagram_session.json` containing `sessionid` and `csrftoken`). No plaintext passwords ever stored or requested.
+* **Full Action Surface:** Publish stories and feed posts, respond to direct messages, post comments, and extract 30-day professional account analytics.
+* **Anti-Ban Protection:** Enforces single-attempt fail-closed circuit breakers and strict string deduplication limits to protect account health.
+
+---
+
+## Provided Tools Reference
+
+`instagram-use` exposes 12 deterministic tools for LLM tool calling:
+
+| Tool | Mode | Description | Key Parameters |
+| :--- | :---: | :--- | :--- |
+| `instagram_publish_story` | Authenticated | Publish an ephemeral story (24-hour lifecycle). | `image_input` (path or base64) |
+| `instagram_publish_post` | Authenticated | Publish a feed post with caption, hashtags, and mentions. | `image_input`, `caption` |
+| `instagram_send_message` | Authenticated | Send a direct message to a user (supports handles or numeric IDs). | `recipient`, `message` |
+| `instagram_get_inbox` | Authenticated | Read direct message inbox threads and unread conversations. | `limit` |
+| `instagram_post_comment` | Authenticated | Post an authentic comment on any post or reel. | `media_id_or_url`, `text` |
+| `instagram_get_insights` | Authenticated | Fetch 30-day professional metrics, audience curves, and reach. | `period`, `metric_type` |
+| `instagram_get_profile` | Ghost | Inspect public profile details (bio, follower count, avatar). | `username` |
+| `instagram_get_posts` | Ghost | Fetch recent posts/reels with like counts and engagement rates. | `username`, `count` |
+| `instagram_get_media_metrics` | Ghost | Retrieve performance metrics (views, discussion count) for a reel/post. | `shortcode_or_url` |
+| `instagram_get_comments` | Ghost | Harvest public comments from any post or reel without logging in. | `shortcode_or_url`, `limit` |
+| `instagram_search` | Ghost | Search for users, creators, and trending hashtags anonymously. | `query` |
+| `instagram_audit_account` | Ghost | Perform a comprehensive analytical audit of any public account. | `username` |
+
+---
+
+## Installation & Setup
+
+### Requirements
+* Python `>= 3.10`
+* Node.js `>= 18.0.0`
+* `twingraph` engine CLI (globally available in `PATH`)
+
+### Option A: Install as a Hermes Agent Plugin
+```bash
+hermes plugins install instagram-use
+```
 Or clone directly into your Hermes plugins directory:
 ```bash
-git clone https://github.com/dalroot/hermes-instagram-twin.git ~/.hermes/plugins/twingraph-instagram
+git clone https://github.com/dalroot/instagram-use.git ~/.hermes/plugins/instagram-use
 ```
 
-### 3. One-Click Authentication (No API Keys Needed)
-If you wish to use authenticated direct messaging, commenting, and account insights:
+### Option B: Use as an MCP Server (Model Context Protocol)
+Add `instagram-use` to your MCP configuration (Claude Desktop, Cursor, Antigravity, etc.):
+
+```json
+{
+  "mcpServers": {
+    "instagram": {
+      "command": "twingraph",
+      "args": ["mcp"],
+      "env": {
+        "INSTAGRAM_SESSION_PATH": "/path/to/instagram_session.json"
+      }
+    }
+  }
+}
+```
+
+### Option C: Standalone Python / CLI Integration
+Clone and install dependencies:
 ```bash
-twingraph login
+git clone https://github.com/dalroot/instagram-use.git
+cd instagram-use
+pip install -e .
 ```
-This opens your local browser, lets you log in securely, and automatically saves your authenticated session to `~/instagram_session.json`.
 
 ---
 
-## 💬 Example Agent Interactions
+## Authentication & Session Setup
 
-### Direct Message Outreach:
-> **User:** "Send a direct message to @elephant.035421 saying 'Welcome to our partner program!'"  
-> **Hermes:** Resolves the username to its numeric PK via `instagram_send_message` and dispatches the message live.
+For **Ghost Mode**, no authentication is required.
 
-### Comment Engagement:
-> **User:** "Leave a friendly comment on https://www.instagram.com/p/DfnMpBfADzF/ saying 'Great job!'"  
-> **Hermes:** Automatically extracts the post shortcode, binds security tokens, and calls `instagram_post_comment`.
-
-### Competitor Intelligence:
-> **User:** "Audit the Instagram account @cristiano and give me his content mix and average engagement."  
-> **Hermes:** Calls `instagram_audit_account` and returns a breakdown of reels vs. posts and engagement benchmarks.
-
-### Content Performance Deep-Dive:
-> **User:** "How did our account perform in the last 30 days?"  
-> **Hermes:** Calls `instagram_get_insights(metric_type="overview", period="30d")` and highlights account growth and top reels.
-
----
-
-## 🔒 Security & Anti-Ban Protocols
-
-- **Zero Credential Leaks:** Credentials and cookies are stored strictly on the local machine and never logged or exposed.
-- **Circuit Breaker Architecture:** Single-attempt fail-closed safety prevents runaway retry loops.
-- **Integrity Compliance:** Adheres to Meta's string deduplication ceilings and request jitter intervals.
+For **Authenticated Mode**:
+1. Run the interactive session generator:
+   ```bash
+   twingraph login
+   ```
+   This opens a secure browser window for you to log in to Instagram once.
+2. The session is automatically persisted to `~/instagram_session.json`.
+3. Alternatively, you can supply your existing cookies manually:
+   ```json
+   {
+     "cookies": {
+       "sessionid": "YOUR_SESSION_ID",
+       "ds_user_id": "YOUR_USER_ID",
+       "csrftoken": "YOUR_CSRF_TOKEN"
+     }
+   }
+   ```
 
 ---
 
-## 📄 License
+## Safety & Circuit Breaker Architecture
 
-MIT License. Developed for the Nous Research Hermes Agent Plugin Hackathon 2026.
+Automated agents can trigger platform checkpoints if they get stuck in loops or send repetitive payloads. `instagram-use` includes built-in protective layers:
+
+* **Single-Attempt Fail-Closed:** If an authenticated request encounters a non-200 response or security challenge, the circuit breaker immediately trips and halts execution. Automated retry loops are strictly blocked.
+* **String Deduplication Caps:** Dispatches of identical comments or messages are capped at safe thresholds to prevent triggering automated spam classifiers.
+* **Strict Parameter Coercion:** URLs, shortcodes, and usernames are automatically validated and resolved before executing network requests.
+
+---
+
+## Example Agent Prompts
+
+```markdown
+# Publishing a Story
+Agent Prompt: "Publish the graphic at /tmp/announcement.jpg as an Instagram story."
+Tool Called: instagram_publish_story(image_input="/tmp/announcement.jpg")
+
+# Direct Message Inquiries
+Agent Prompt: "Check our direct message inbox for any unread customer questions and summarize them."
+Tool Called: instagram_get_inbox(limit=10)
+
+# Anonymous Competitor Audit (Ghost Mode)
+Agent Prompt: "Inspect the public profile @competitor_brand, calculate their average reel engagement, and summarize their top 3 recent posts."
+Tools Called: 
+1. instagram_get_profile(username="competitor_brand")
+2. instagram_get_posts(username="competitor_brand", count=10)
+```
+
+---
+
+## Repository Metadata & Topics
+
+Recommended configuration for the GitHub repository:
+
+* **Repository Name:** `instagram-use`
+* **Short Description (About):**  
+  *Make Instagram usable for AI agents. Meta Graph API v21.0 Twin architecture, MCP server, and Agent plugin for stories, posts, DMs, comments, and anonymous Ghost Mode.*
+* **Website:** `https://github.com/dalroot/instagram-use`
+* **GitHub Topics:**  
+  `instagram-use`, `ai-agents`, `mcp-server`, `llm-tools`, `instagram-agent`, `agent-toolkit`, `hermes-agent`, `meta-graph-api`, `cookie-session`, `automation`
+
+---
+
+## License
+
+This project is licensed under the MIT License. See [LICENSE](LICENSE) for details.
